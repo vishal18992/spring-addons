@@ -18,14 +18,15 @@ class CrmLeadController(http.Controller):
         [ record.update({val: kwrgs.get(val, '')}) for val in CRM_FIELDS]
         
         customer = partner_obj.search([('name', '=', kwrgs.get('customer'))])
-        sales_person = request.env['res.users'].search(['|', ('name', '=', kwrgs.get('salesperson')), ('login', '=', kwrgs.get('salesperson'))])
+        sales_person = request.env['res.users'].sudo().search(['|', ('name', '=', kwrgs.get('salesperson')), ('login', '=', kwrgs.get('salesperson'))])
         
         if not customer:
             customer = partner_obj.sudo().create({"name": kwrgs.get('customer')})
 
         record["user_id"] = sales_person.id if sales_person else False
         record["partner_id"] = customer and customer.id
-        
+        record['type'] = "lead"
+        _logger.info("Lead record %s", (record))
         try:
             lead = request.env['crm.lead'].sudo().create(record)
         except Exception as ex:

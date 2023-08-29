@@ -1,0 +1,21 @@
+<odoo>
+    <record id="crm_lead_view_form_inherit_crm_spring" model="ir.ui.view">
+        <field name="name">crm.lead.view.form.inherit.crm.spring</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+        <field name="arch" type="xml">
+           <xpath expr="//page[@name='lead']" position="after">
+                <page name="provinces" string="Available Provinces">
+                    <group>
+                        <field name="provinces" widget="many2many_tags" string="Provinces" domain="[('country_id.code', '=', 'CA')]" options="{'create': false, 'create_edit': false}"/>
+                    </group>
+                </page>
+           </xpath>
+           <xpath expr="//group[@name='opportunity_partner']//field[@name='lost_reason_id']" position="before">
+                <field name="opportunity_type" attrs="{'invisible': [('type', '=', 'lead')]}" string="Opportunity Type"/>
+                <field name="opportunity_type_name" string="Technology Name" attrs="{'invisible': ['|', ('opportunity_type', '=', 'business'), ('opportunity_type', 'not in', ['business', 'technology'])]}"/>
+                <field name="opportunity_type_name" string="Business Name" attrs="{'invisible': ['|',('opportunity_type', '=', 'technology'), ('opportunity_type', 'not in', ['business', 'technology'])]}"/>
+           </xpath>
+        </field>
+    </record>
+</odoo>
