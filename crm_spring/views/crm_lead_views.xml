@@ -5,14 +5,13 @@
         <field name="inherit_id" ref="crm.crm_lead_view_form"/>
         <field name="arch" type="xml">
             <xpath expr="//header/field[@name='stage_id']" position="after">
-                <!-- <field name="state" widget="statusbar" statusbar_visible="new,review,complete" attrs="{'invisible': [('type', '=', 'opportunity')]}"/>
-                <button name="action_new" type="object" string="New" attrs="{'invisible': ['|', ('type', '=', 'opportunity'), ('state', 'in', ['new', 'complete'])]}"/>
-                <button name="action_review" type="object" string="Under Review" attrs="{'invisible': ['|', ('type', '=', 'opportunity'), ('state', 'in', ['review', 'complete'])]}"/>
-                <button name="action_complete" type="object" string="Complete" attrs="{'invisible': ['|', ('type', '=', 'opportunity'), ('state', 'in', ['new', 'complete'])]}"/> -->
-            </xpath> 
-            <!-- <xpath expr="//header/button[@name='%(crm.action_crm_lead2opportunity_partner)d']" position="attributes">
-                <attribute name="attrs">{'invisible': ['|', '|', ('type', '=', 'opportunity'), ('active', '=', False), ('state', '!=', 'complete')]}</attribute>
-            </xpath> -->
+                <field name="is_complete" invisible="1"/>
+                <field name="stage_id" widget="statusbar" class="o_field_statusbar" options="{'clickable': '1', 'fold_field': 'fold'}" domain="['|', ('team_id', '=', team_id), ('team_id', '=', False), ('type', '=', type)]" attrs="{'invisible': ['|', ('active', '=', False), ('type', '=', 'opportunity')]}"/>
+                <button name="action_complete" type="object" string="Complete" attrs="{'invisible': ['|', '|', ('active', '=', False), ('type', '=', 'opportunity'), ('is_complete', '=', True)]}"/>
+           </xpath>
+            <xpath expr="//header/button[@name='%(crm.action_crm_lead2opportunity_partner)d']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|', '|', ('type', '=', 'opportunity'), ('active', '=', False), ('is_complete', '=', False)]}</attribute>
+            </xpath>
            <xpath expr="//page[@name='lead']" position="after">
                 <page name="provinces" string="Available Provinces">
                     <group>
@@ -29,17 +28,34 @@
     </record>
 
 
-    <!-- <record id="view_crm_case_leads_filter_inherit_crm_spring" model="ir.ui.view">
+    <record id="view_crm_lead_kanban_inherit_crm_spring" model="ir.ui.view">
+        <field name="name">crm.lead.view.kanban.inherit.crm.spring</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm.view_crm_lead_kanban"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='priority']" position="after">
+                <field name="stage_id"/>
+            </xpath>
+            <xpath expr="//kanban" position="attributes">
+                <attribute name="default_group_by">stage_id</attribute>
+                <attribute name="class">o_kanban_small_column o_opportunity_kanban</attribute>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="view_crm_case_leads_filter_inherit_crm_spring" model="ir.ui.view">
             <field name="name">crm.lead.search.lead.inherit.crm.spring</field>
             <field name="model">crm.lead</field>
             <field name="inherit_id" ref="crm.view_crm_case_leads_filter"/>
             <field name="arch" type="xml">
                 <field name="user_id" position="after">
-                    <field name="state"/>
+                    <field name="stage_id"/>
                 </field>
 
                 <xpath expr="//filter[@name='saleschannel']" position="after">
-                    <filter name="state" string="State" context="{'group_by': 'state'}"/>
+                    <filter name="stage_id" string="Stage" context="{'group_by': 'stage_id'}"/>
                 </xpath>
             </field>
     </record>
@@ -49,9 +65,9 @@
                     'default_type':'lead',
                     'search_default_type': 'lead',
                     'search_default_to_process':1,
-                    'search_default_group_state': 1
+                    'search_default_group_stage_id': 1
                 }
             </field>
-    </record> -->
+    </record>
     
 </odoo>

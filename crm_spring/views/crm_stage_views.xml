@@ -1,0 +1,27 @@
+<odoo>
+
+    
+
+    <record id="crm_stage_tree_inherit_crm_spring" model="ir.ui.view">
+        <field name="name">crm.stage.view.tree.inherit.crm.spring</field>
+        <field name="model">crm.stage</field>
+        <field name="inherit_id" ref="crm.crm_stage_tree"/>
+        <field name="arch" type="xml">
+             <field name="team_id" position="after">
+                <field name="type" string="Stage Type"/>
+            </field>
+        </field>
+    </record>
+
+
+    <record id="crm_stage_form_inherit_crm_spring" model="ir.ui.view">
+        <field name="name">crm.stage.view.form.inherit.crm.spring</field>
+        <field name="model">crm.stage</field>
+        <field name="inherit_id" ref="crm.crm_stage_form"/>
+        <field name="arch" type="xml">
+            <field name="team_id" position="after">
+                <field name="type" string="Stage Type"/>
+            </field>
+        </field>
+    </record>
+</odoo>
