@@ -31,8 +31,5 @@ class CrmLeadController(http.Controller):
             lead = request.env['crm.lead'].sudo().with_context({'default_type': 'lead'}).create(record)
         except Exception as ex:
              _logger.exception('Error while creating lead!!.', ex)
-        
-        return {
-            "id": lead.id
-        }
+        return True
 
