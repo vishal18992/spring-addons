@@ -4,24 +4,12 @@ from odoo import models, fields, api, _, SUPERUSER_ID
 class CrmLead(models.Model):
     _inherit = "crm.lead"
 
-
-   
-    # def _compute_stage_id(self):
-    #     return super(CrmLead, self)._compute_stage_id()
-
-
-
     provinces = fields.Many2many("res.country.state", string="Provinces")
     opportunity_type = fields.Selection([('technology', _('Technology')), \
         ('business', _('Business'))], string="Opportunity Type")
     opportunity_type_name = fields.Char(string="Opportunity Type Name")
     is_complete = fields.Boolean(string="IsComplete", \
         compute='_compute_is_complete')
-    # stage_id = fields.Many2one(
-    #     'crm.stage', string='Stage', index=True, tracking=True,
-    #     compute='_compute_stage_id', readonly=False, store=True,
-    #     copy=False, group_expand='_read_group_stage_ids', ondelete='restrict',
-    #     domain="['|', ('team_id', '=', False), ('team_id', '=', team_id), ('type', '=', type)]")
 
 
     @api.depends('stage_id')
@@ -71,4 +59,25 @@ class CrmLead(models.Model):
                 leads_by_complete_stage[stage_id] = lead
         for complete_stage_id, leads in leads_by_complete_stage.items():
             leads.write({'stage_id': complete_stage_id.id, 'probability': 100})
+        return True
+
+
+    def convert_opportunity(self, partner, user_ids=False, team_id=False):
+        customer = partner if partner else self.env['res.partner']
+        for lead in self:
+            if not lead.active or lead.probability == 100:
+                continue
+            lead.type= "opportunity"
+            lead.stage_id = False
+            vals = lead._convert_opportunity_data(customer, team_id)
+            vals.update({'opportunity_type': "technology"})
+            lead.write(vals)
+
+            new_opportunity = lead.copy({'opportunity_type': "business"})
+            opportunity_vals = new_opportunity._convert_opportunity_data(customer, team_id)
+            new_opportunity.write(opportunity_vals)
+
+        if user_ids or team_id:
+            self._handle_salesmen_assignment(user_ids=user_ids, team_id=team_id)
+
         return True
