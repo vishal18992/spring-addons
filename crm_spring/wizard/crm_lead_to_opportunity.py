@@ -1,4 +1,5 @@
-from odoo import models
+from odoo import models, _
+from odoo.exceptions import ValidationError
 
 
 class Lead2OpportunityPartner(models.TransientModel):
@@ -17,3 +18,9 @@ class Lead2OpportunityPartner(models.TransientModel):
         context.update({'active_ids': result_opportunities.ids})
         self.env.context = context
         return super(Lead2OpportunityPartner, self)._action_convert()
+
+    def action_apply(self):
+        leads = self.env['crm.lead'].browse(self._context.get('active_ids', []))
+        if not any([lead.state == 'complete' for lead in leads]):
+            raise ValidationError(_("You can not convert opportunities due to not in complete state.Please contact administrator."))
+        return super(Lead2OpportunityPartner, self).action_apply()

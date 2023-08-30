@@ -4,6 +4,15 @@
         <field name="model">crm.lead</field>
         <field name="inherit_id" ref="crm.crm_lead_view_form"/>
         <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='stage_id']" position="after">
+                <!-- <field name="state" widget="statusbar" statusbar_visible="new,review,complete" attrs="{'invisible': [('type', '=', 'opportunity')]}"/>
+                <button name="action_new" type="object" string="New" attrs="{'invisible': ['|', ('type', '=', 'opportunity'), ('state', 'in', ['new', 'complete'])]}"/>
+                <button name="action_review" type="object" string="Under Review" attrs="{'invisible': ['|', ('type', '=', 'opportunity'), ('state', 'in', ['review', 'complete'])]}"/>
+                <button name="action_complete" type="object" string="Complete" attrs="{'invisible': ['|', ('type', '=', 'opportunity'), ('state', 'in', ['new', 'complete'])]}"/> -->
+            </xpath> 
+            <!-- <xpath expr="//header/button[@name='%(crm.action_crm_lead2opportunity_partner)d']" position="attributes">
+                <attribute name="attrs">{'invisible': ['|', '|', ('type', '=', 'opportunity'), ('active', '=', False), ('state', '!=', 'complete')]}</attribute>
+            </xpath> -->
            <xpath expr="//page[@name='lead']" position="after">
                 <page name="provinces" string="Available Provinces">
                     <group>
@@ -18,4 +27,31 @@
            </xpath>
         </field>
     </record>
+
+
+    <!-- <record id="view_crm_case_leads_filter_inherit_crm_spring" model="ir.ui.view">
+            <field name="name">crm.lead.search.lead.inherit.crm.spring</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.view_crm_case_leads_filter"/>
+            <field name="arch" type="xml">
+                <field name="user_id" position="after">
+                    <field name="state"/>
+                </field>
+
+                <xpath expr="//filter[@name='saleschannel']" position="after">
+                    <filter name="state" string="State" context="{'group_by': 'state'}"/>
+                </xpath>
+            </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="crm.crm_lead_all_leads">
+        <field name="context">{
+                    'default_type':'lead',
+                    'search_default_type': 'lead',
+                    'search_default_to_process':1,
+                    'search_default_group_state': 1
+                }
+            </field>
+    </record> -->
+    
 </odoo>
