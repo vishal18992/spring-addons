@@ -13,6 +13,7 @@
         'crm',
     ],
     'data': [
+        "data/crm_stage_data.xml",
         "views/crm_lead_views.xml",
         "views/crm_stage_views.xml"
     ],
