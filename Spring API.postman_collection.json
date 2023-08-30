@@ -1,0 +1,41 @@
+{
+	"info": {
+		"_postman_id": "8d81ecee-8191-4cca-8bdd-4e96acac896f",
+		"name": "Spring API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "541069",
+		"_collection_link": "https://restless-resonance-651254.postman.co/workspace/Odoo-School-Android-Apps~f4a93e1f-d24c-4b06-bab1-a9433ae1b853/collection/541069-8d81ecee-8191-4cca-8bdd-4e96acac896f?action=share&source=collection_link&creator=541069"
+	},
+	"item": [
+		{
+			"name": "http://127.0.0.1:8069/lead",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "x-Openerp",
+						"value": "8bff4f84a450d5bf402158a72684dacf7d409c7a",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \n    \"params\": {\n        \"name\": \"Hellow .\",\n        \"phone\": \"+1 204-901-5522\",\n        \"customer\": \"Tu Patel\",\n        \"salesperson\": \"Administrator\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://127.0.0.1:8069/lead"
+			},
+			"response": []
+		}
+	]
+}
