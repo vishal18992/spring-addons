@@ -9,11 +9,9 @@
         <field name="arch" type="xml">
              <field name="team_id" position="after">
                 <field name="type" string="Stage Type"/>
-                <field name="is_complete" string="Is Complete Stage" attrs="{'invisible': [('type', '=', 'opportunity')]}"/>
+                <field name="is_complete" string="Is Complete Stage" />
             </field>
-            <field name="is_won" position="attributes">
-                <attribute name="attrs">{'invisible': [('type', '=', 'lead')]}</attribute>
-            </field>
+            
         </field>
     </record>
 
@@ -25,11 +23,9 @@
         <field name="arch" type="xml">
             <field name="team_id" position="after">
                 <field name="type" string="Stage Type"/>
-                <field name="is_complete" string="Is Complete Stage" attrs="{'invisible': [('type', '=', 'opportunity')]}"/>
+                <field name="is_complete" string="Is Complete Stage"/>
             </field>
-            <field name="is_won" position="attributes">
-                <attribute name="attrs">{'invisible': [('type', '=', 'lead')]}</attribute>
-            </field>
+            
         </field>
     </record>
 </odoo>
