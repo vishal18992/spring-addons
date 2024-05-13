@@ -7,12 +7,10 @@
             <xpath expr="//header/field[@name='stage_id']" position="after">
                 <field name="is_complete" invisible="1"/>
                 <field name="type" invisible="1"/>
-                <field name="stage_id" widget="statusbar" class="o_field_statusbar" options="{'clickable': '1', 'fold_field': 'fold'}" domain="['|', ('team_id', '=', team_id), ('team_id', '=', False), ('type', '=', type)]" attrs="{'invisible': ['|', ('active', '=', False), ('type', '=', 'opportunity')]}"/>
-                <button name="action_complete" type="object" string="Complete" attrs="{'invisible': ['|', '|', ('active', '=', False), ('type', '=', 'opportunity'), ('is_complete', '=', True)]}"/>
+                <field name="stage_id" widget="statusbar" class="o_field_statusbar" options="{'clickable': '1', 'fold_field': 'fold'}" domain="['|', ('team_id', '=', team_id), ('team_id', '=', False), ('type', '=', type)]"/>
+                <button name="action_complete" type="object" string="Complete"/>
            </xpath>
-            <xpath expr="//header/button[@name='%(crm.action_crm_lead2opportunity_partner)d']" position="attributes">
-                <attribute name="attrs">{'invisible': ['|', '|', ('type', '=', 'opportunity'), ('active', '=', False), ('is_complete', '=', False)]}</attribute>
-            </xpath>
+           
            <xpath expr="//page[@name='lead']" position="after">
                 <page name="provinces" string="Available Provinces">
                     <group>
@@ -21,9 +19,9 @@
                 </page>
            </xpath>
            <xpath expr="//group[@name='opportunity_partner']//field[@name='lost_reason_id']" position="before">
-                <field name="opportunity_type" attrs="{'invisible': [('type', '=', 'lead')]}" string="Opportunity Type"/>
-                <field name="opportunity_type_name" string="Technology Name" attrs="{'invisible': ['|', ('opportunity_type', '=', 'business'), ('opportunity_type', 'not in', ['business', 'technology'])]}"/>
-                <field name="opportunity_type_name" string="Business Name" attrs="{'invisible': ['|',('opportunity_type', '=', 'technology'), ('opportunity_type', 'not in', ['business', 'technology'])]}"/>
+                <field name="opportunity_type"  string="Opportunity Type"/>
+                <field name="opportunity_type_name" string="Technology Name" />
+                <field name="opportunity_type_name" string="Business Name"/>
            </xpath>
         </field>
     </record>
