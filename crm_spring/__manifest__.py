@@ -4,7 +4,7 @@
 
 {
     'name': 'Spring CRM',
-    'version': '16.0.0.1',
+    'version': '17.0.0.1',
     'category': 'Sales/CRM',
     'sequence': 1,
     'summary': '',
